@@ -44,8 +44,8 @@
 <body class="d-flex flex-column min-vh-100">
     <header class="navbar navbar-expand-lg navbar-light bg-light">
         <nav class="container">
-            <a class="navbar-brand" href="{{ url('/') }}" class="h1">SIMP</a>
-            <div class="ml-auto collapse navbar-collapse" id="navbarNav">
+            <a class="navbar-brand" href="{{ url('/') }}" class="h1">@yield('nama')</a>
+            <div class="ml-auto" id="navbarNav">
                 <ul class="navbar-nav ml-auto nav-pills">
                     <li class="nav-item">
                         <a class="nav-link px-2 text-danger" href="{{ url('/logout') }}">Log out</a>

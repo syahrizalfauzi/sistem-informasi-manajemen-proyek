@@ -9,6 +9,17 @@ class Task extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'judul',
+        'deskripsi',
+        'status',
+        'project_id'
+    ];
     public function project()
     {
         return $this->belongsTo(Project::class);

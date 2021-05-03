@@ -12,6 +12,16 @@ class Project extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'id',
+        'judul',
+        'deskripsi',
+    ];
     public function users()
     {
         return $this->belongsToMany(User::class, 'project_user');

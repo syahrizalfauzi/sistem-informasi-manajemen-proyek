@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\project;
+use App\Models\Project;
+use App\Utils\RandomStringGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,7 +28,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        $nama = Auth::user()->nama;
+        return view('projects.create', compact('nama'));
     }
     /**
      * Store a newly created resource in storage.
@@ -37,7 +39,25 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'judul' => 'required',
+        ]);
+        $judul = $request->judul;
+        $deskripsi = $request->deskripsi;
+
+        $generator = new RandomStringGenerator;
+        do {
+            $id = $generator->generate(8);
+        } while (Project::find($id));
+
+        $project = new Project([
+            'id' => $id,
+            'judul' => $judul,
+            'deskripsi' => $deskripsi
+        ]);
+        $project->save();
+        $project->users()->attach(Auth::user()->id);
+        return redirect('/');
     }
     /**
      * Show the form for join a new project.
@@ -63,21 +83,25 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\project  $project
+     * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function show(project $project)
+    public function show(Project $project)
     {
-        //
+        $nama = Auth::user()->nama;
+        return view('projects.show', [
+            'project' => $project,
+            'nama' => $nama
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\project  $project
+     * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function edit(project $project)
+    public function edit(Project $project)
     {
         //
     }
@@ -86,10 +110,10 @@ class ProjectController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\project  $project
+     * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, project $project)
+    public function update(Request $request, Project $project)
     {
         //
     }
@@ -97,10 +121,10 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\project  $project
+     * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy(project $project)
+    public function destroy(Project $project)
     {
         //
     }
