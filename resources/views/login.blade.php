@@ -3,11 +3,13 @@
 
 @section('content')
     @if ($errors->any())
-        <ul>
+        <div class="alert alert-danger">
             @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
+                <p class="text-left mb-0">
+                    {{ $error }}
+                </p>
             @endforeach
-        </ul>
+        </div>
     @endif
 
     <form action="{{ url('/login') }}" method="post" class="form-signin card mt-4">

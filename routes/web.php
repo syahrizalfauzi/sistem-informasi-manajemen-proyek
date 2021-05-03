@@ -39,7 +39,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/projects/create', [ProjectController::class, 'create']);
     Route::post('/projects', [ProjectController::class, 'store']);
     Route::get('/projects/join', [ProjectController::class, 'join']);
-    Route::post('/projects/join', [ProjectController::class, 'storeJoin']);
+    Route::get('/projects/join/{project}', [ProjectController::class, 'showJoin']);
+    Route::post('/projects/join', [ProjectController::class, 'storeShowJoin']);
+    Route::post('/projects/join/store', [ProjectController::class, 'storeJoin']);
 
     Route::group(['middleware' => ['ownedproject']], function () {
         Route::get('/projects/{project}', [ProjectController::class, 'show']);

@@ -10,20 +10,17 @@ use Illuminate\Support\Facades\Auth;
 class ProjectController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
         $projects =  Auth::user()->projects;
         $nama = Auth::user()->nama;
-        return view('projects.index', compact('projects', 'nama'));
+        $userId = Auth::user()->id;
+        return view('projects.index', compact('projects', 'nama', 'userId'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function create()
@@ -31,9 +28,8 @@ class ProjectController extends Controller
         $nama = Auth::user()->nama;
         return view('projects.create', compact('nama'));
     }
+
     /**
-     * Store a newly created resource in storage.
-     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -59,30 +55,63 @@ class ProjectController extends Controller
         $project->users()->attach(Auth::user()->id);
         return redirect('/');
     }
+
     /**
-     * Show the form for join a new project.
-     *
      * @return \Illuminate\Http\Response
      */
     public function join()
     {
-        //
+        $nama = Auth::user()->nama;
+        return view('projects.join', compact('nama'));
     }
 
     /**
-     * Join a project.
-     *
+     * @param  \App\Models\Project  $project
+     * @return \Illuminate\Http\Response
+     */
+    public function showJoin(Project $project)
+    {
+        $isJoined = $project->users->contains('id', Auth::user()->id);
+        $nama = Auth::user()->nama;
+        $userId = Auth::user()->id;
+        return view('projects.joinshow', [
+            'project' => $project,
+            'isJoined' => $isJoined,
+            'nama' => $nama,
+            'userId' => $userId
+        ]);
+    }
+
+    /**
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeShowJoin(Request $request)
+    {
+        $request->validate([
+            'kode' => 'required'
+        ]);
+
+        $kode = $request->kode;
+        if (Project::find($kode))
+            return redirect('/projects/join/' . $kode);
+
+        return back()->withErrors(['error' => 'Proyek tidak ditemukan']);
+    }
+
+    /**
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function storeJoin(Request $request)
     {
-        //
+        $kode = $request->kode;
+        $project = Project::find($kode);
+        $project->users()->attach(Auth::user()->id);
+        return redirect('/')->with('message', 'Berhasil bergabung dengan proyek "' . $project->judul . '"');
     }
 
     /**
-     * Display the specified resource.
-     *
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
@@ -96,8 +125,6 @@ class ProjectController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
@@ -107,8 +134,6 @@ class ProjectController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
@@ -119,8 +144,6 @@ class ProjectController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */

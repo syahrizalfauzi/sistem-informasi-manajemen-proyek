@@ -1,9 +1,11 @@
 @extends('layout')
 @section('title', 'SIMP - Proyek baru')
 @section('nama', $nama)
+@section('navlink', 'create')
 
 @section('content')
     <h1>Buat proyek baru</h1>
+    <p>Silahkan isi form di bawah untuk membuat proyek baru</p>
     <form action="{{ url('/projects') }}" method="POST">
         @csrf
         <div class="form-group">

@@ -45,8 +45,25 @@
     <header class="navbar navbar-expand-lg navbar-light bg-light">
         <nav class="container">
             <a class="navbar-brand" href="{{ url('/') }}" class="h1">@yield('nama')</a>
-            <div class="ml-auto" id="navbarNav">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="ml-auto collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto nav-pills">
+                    @hasSection('navlink')
+                        <li class="nav-item">
+                            <a class="nav-link px-2 
+                                                @if ($__env->yieldContent('navlink') == 'join') active text-white @endif
+                                " href="{{ url('/projects/join') }}">Gabung</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-2 
+                                                @if ($__env->yieldContent('navlink') == 'create') active text-white @endif
+                                " href="{{ url('/projects/create') }}">Buat</a>
+                        </li>
+                    @else
+                    @endif
                     <li class="nav-item">
                         <a class="nav-link px-2 text-danger" href="{{ url('/logout') }}">Log out</a>
                     </li>
@@ -55,11 +72,9 @@
         </nav>
     </header>
 
-    <main role="main" class="container my-4">
+    <main role="main" class="container my-4" style="flex-grow: 1;">
         @yield('content')
     </main>
-
-    <div style="flex-grow:1;"></div>
 
     <footer class="footer p-4">
         <div class="container text-muted">
