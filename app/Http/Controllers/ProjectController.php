@@ -15,7 +15,9 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return Auth::user()->projects;
+        $projects =  Auth::user()->projects;
+        $nama = Auth::user()->nama;
+        return view('projects.index', compact('projects', 'nama'));
     }
 
     /**
@@ -24,6 +26,16 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
+    {
+        //
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
         //
     }
@@ -37,16 +49,6 @@ class ProjectController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
     /**
      * Join a project.
      *

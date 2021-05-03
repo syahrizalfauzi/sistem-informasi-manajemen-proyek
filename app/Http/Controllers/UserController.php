@@ -60,7 +60,7 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-        return redirect('/login');
+        return redirect('/login')->with('message', 'Pendaftaran akun berhasil! silahkan log in');
     }
 
     /**

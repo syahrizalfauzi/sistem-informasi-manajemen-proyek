@@ -38,21 +38,20 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/projects', [ProjectController::class, 'index']);
     Route::get('/projects/create', [ProjectController::class, 'create']);
     Route::post('/projects', [ProjectController::class, 'store']);
+    Route::get('/projects/join', [ProjectController::class, 'join']);
     Route::post('/projects/join', [ProjectController::class, 'storeJoin']);
 
     Route::group(['middleware' => ['ownedproject']], function () {
-        Route::get('/projects/join', [ProjectController::class, 'join']);
         Route::get('/projects/{project}', [ProjectController::class, 'show']);
         Route::get('/projects/edit/{project}', [ProjectController::class, 'edit']);
         Route::put('/projects/{project}', [ProjectController::class, 'update']);
         Route::delete('/projects/{project}', [ProjectController::class, 'destroy']);
 
-        // Route::group(['middleware' => ['owned.task']], function () {
+        Route::get('projects/{project}/tasks/create', [TaskController::class, 'create']);
         Route::post('projects/{project}/tasks', [TaskController::class, 'store']);
         Route::get('projects/{project}/tasks/{task}', [TaskController::class, 'show']);
         Route::get('projects/{project}/tasks/edit/{task}', [TaskController::class, 'edit']);
         Route::put('projects/{project}/task/{task}', [TaskController::class, 'update']);
         Route::delete('projects/{project}/task/{task}', [TaskController::class, 'destroy']);
-        // });
     });
 });
