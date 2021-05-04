@@ -14,7 +14,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects =  Auth::user()->projects;
+        $projects =  Auth::user()->projects->paginate(5);
+        // $projects = Project::paginate(5);
         $nama = Auth::user()->nama;
         $userId = Auth::user()->id;
         return view('projects.index', compact('projects', 'nama', 'userId'));
@@ -38,19 +39,16 @@ class ProjectController extends Controller
         $request->validate([
             'judul' => 'required',
         ]);
-        $judul = $request->judul;
-        $deskripsi = $request->deskripsi;
 
         $generator = new RandomStringGenerator;
         do {
             $id = $generator->generate(8);
         } while (Project::find($id));
 
-        $project = new Project([
-            'id' => $id,
-            'judul' => $judul,
-            'deskripsi' => $deskripsi
-        ]);
+        $project = new Project();
+        $project->id = $id;
+        $project->judul = $request->judul;
+        $project->deskripsi = $request->deskripsi;
         $project->save();
         $project->users()->attach(Auth::user()->id);
         return redirect('/');
@@ -108,7 +106,7 @@ class ProjectController extends Controller
         $kode = $request->kode;
         $project = Project::find($kode);
         $project->users()->attach(Auth::user()->id);
-        return redirect('/')->with('message', 'Berhasil bergabung dengan proyek "' . $project->judul . '"');
+        return redirect('/projects/' . $project->id);
     }
 
     /**
@@ -118,9 +116,11 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         $nama = Auth::user()->nama;
+        $userId = Auth::user()->id;
         return view('projects.show', [
             'project' => $project,
-            'nama' => $nama
+            'nama' => $nama,
+            'userId' => $userId
         ]);
     }
 
@@ -130,7 +130,11 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        $nama = Auth::user()->nama;
+        return view('projects.edit', [
+            'project' => $project,
+            'nama' => $nama
+        ]);
     }
 
     /**
@@ -140,7 +144,15 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        $request->validate([
+            'judul' => 'required',
+        ]);
+
+        $project->judul = $request->judul;
+        $project->deskripsi = $request->deskripsi;
+
+        $project->update();
+        return redirect('/projects/' . $project->id);
     }
 
     /**
@@ -149,6 +161,11 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        $project->users()->detach();
+        $project->tasks()->get()->each(function ($task) {
+            $task->delete();
+        });
+        $project->delete();
+        return redirect('/');
     }
 }

@@ -11,7 +11,7 @@
         <div class="form-group">
             <label for="kode">Kode proyek</label>
             <input class="form-control mb-2" value="{{ old('kode') }}" id="kode" placeholder="1234abcd" name="kode"
-                required autofocus>
+                required autofocus maxlength="8">
             <input type="submit" value="Cari" class="btn btn-block btn-primary">
         </div>
     </form>

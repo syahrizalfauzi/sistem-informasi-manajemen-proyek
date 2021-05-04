@@ -5,6 +5,16 @@
 
 @section('content')
     <div class="jumbotron">
+        @if ($project->users[0]->id == $userId)
+            <div class="float-right d-flex flex-row">
+                <form action="{{ url('/projects/' . $project->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <input type="submit" value="Hapus" class="btn btn-danger">
+                </form>
+                <a href="{{ url('/projects/edit/' . $project->id) }}" class="btn btn-info ml-2">Ubah</a>
+            </div>
+        @endif
         <h1>{{ $project->judul }}</h1>
         <p class="text-muted">Kode : {{ $project->id }}</p>
         <p>{{ $project->deskripsi }}</p>

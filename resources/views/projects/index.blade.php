@@ -36,6 +36,9 @@
                 @endif
             </a>
         @endforeach
+        <div class="float-right">
+            {{ $projects->links('pagination::bootstrap-4') }}
+        </div>
     @else
         <div class="d-flex h-100 flex-column align-items-center justify-content-center">
             <p>Anda belum memiliki proyek</p>
