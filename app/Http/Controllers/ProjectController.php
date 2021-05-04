@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Utils\RandomStringGenerator;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
@@ -37,7 +38,8 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'judul' => 'required',
+            'judul' => 'required|max:255',
+            'deskripsi' => 'max:255'
         ]);
 
         $generator = new RandomStringGenerator;
@@ -115,9 +117,13 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
+        $users = $project->users->paginate(20, null, null, 'users');
+        $tasks = $project->tasks->paginate(5, null, null, 'tasks');
         $nama = Auth::user()->nama;
         $userId = Auth::user()->id;
         return view('projects.show', [
+            'users' => $users,
+            'tasks' => $tasks,
             'project' => $project,
             'nama' => $nama,
             'userId' => $userId
@@ -145,7 +151,8 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project)
     {
         $request->validate([
-            'judul' => 'required',
+            'judul' => 'required|max:255',
+            'deskripsi' => 'max:255'
         ]);
 
         $project->judul = $request->judul;

@@ -54,12 +54,14 @@
                     @hasSection('navlink')
                         <li class="nav-item">
                             <a class="nav-link px-2 
-                                                @if ($__env->yieldContent('navlink') == 'join') active text-white @endif
+                                                        @if ($__env->yieldContent('navlink') ==
+                                'join') active text-white @endif
                                 " href="{{ url('/projects/join') }}">Gabung</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link px-2 
-                                                @if ($__env->yieldContent('navlink') == 'create') active text-white @endif
+                                                        @if ($__env->yieldContent('navlink') ==
+                                'create') active text-white @endif
                                 " href="{{ url('/projects/create') }}">Buat</a>
                         </li>
                     @else

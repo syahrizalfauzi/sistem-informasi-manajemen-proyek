@@ -19,7 +19,7 @@
         <div class="form-group">
             <label class="sr-only" for="username">Username</label>
             <input value="{{ old('username') }}" class="form-control" id="username" placeholder="Username" name="username"
-                autocomplete="username" required>
+                autocomplete="username" required autofocus>
             <label class="sr-only" for="nama">Nama lengkap</label>
             <input value="{{ old('nama') }}" class="form-control" id="nama" placeholder="Nama lengkap" name="nama"
                 autocomplete="name" required>
