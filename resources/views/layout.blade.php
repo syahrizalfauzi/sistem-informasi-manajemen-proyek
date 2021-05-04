@@ -54,13 +54,13 @@
                     @hasSection('navlink')
                         <li class="nav-item">
                             <a class="nav-link px-2 
-                                                        @if ($__env->yieldContent('navlink') ==
+                                                            @if ($__env->yieldContent('navlink') ==
                                 'join') active text-white @endif
                                 " href="{{ url('/projects/join') }}">Gabung</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link px-2 
-                                                        @if ($__env->yieldContent('navlink') ==
+                                                            @if ($__env->yieldContent('navlink') ==
                                 'create') active text-white @endif
                                 " href="{{ url('/projects/create') }}">Buat</a>
                         </li>
@@ -82,6 +82,8 @@
         <div class="container text-muted">
             <p>
                 Dibuat oleh kelompok 4 Praktikum Rekayasa Perangkat Lunak<br>
+                Norma Sakinah (21120118120034), Muhammad Syahrizal Fauzi (21120118130066), Wisnu Adi Pramono
+                (21120118120039)<br>
                 Departemen Teknik Komputer, Fakultas Teknik <br>
                 Universitas Diponegoro @ 2021
             </p>

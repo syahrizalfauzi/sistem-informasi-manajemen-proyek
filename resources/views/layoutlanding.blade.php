@@ -58,6 +58,7 @@
     <div>
         <h1 class="display-3 text-center">SIMP</h1>
         <h4 class="text-center">Sistem Informasi Manajemen Proyek</h1>
+            <p class="text-muted">- oleh kelompok 4 -</p>
             @yield('content')
     </div>
 
