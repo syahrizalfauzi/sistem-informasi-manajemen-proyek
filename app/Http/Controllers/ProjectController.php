@@ -13,10 +13,9 @@ class ProjectController extends Controller
     /**
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function displayDashboard()
     {
         $projects =  Auth::user()->projects->paginate(5);
-        // $projects = Project::paginate(5);
         $nama = Auth::user()->nama;
         $userId = Auth::user()->id;
         return view('projects.index', compact('projects', 'nama', 'userId'));
@@ -25,7 +24,7 @@ class ProjectController extends Controller
     /**
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function displayCreatePage()
     {
         $nama = Auth::user()->nama;
         return view('projects.create', compact('nama'));
@@ -59,7 +58,7 @@ class ProjectController extends Controller
     /**
      * @return \Illuminate\Http\Response
      */
-    public function join()
+    public function displayJoinPage()
     {
         $nama = Auth::user()->nama;
         return view('projects.join', compact('nama'));
@@ -69,7 +68,7 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function showJoin(Project $project)
+    public function displayJoinDetailPage(Project $project)
     {
         $isJoined = $project->users->contains('id', Auth::user()->id);
         $nama = Auth::user()->nama;
@@ -94,9 +93,9 @@ class ProjectController extends Controller
 
         $kode = $request->kode;
         if (Project::find($kode))
-            return redirect('/projects/join/' . $kode);
+            return redirect('projects/join/' . $kode);
 
-        return back()->withErrors(['error' => 'Proyek tidak ditemukan']);
+        return redirect('projects/join')->withErrors(['error' => 'Proyek tidak ditemukan']);
     }
 
     /**
@@ -115,7 +114,7 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project)
+    public function displayDetailPage(Project $project)
     {
         $users = $project->users->paginate(20, null, null, 'users');
         $tasks = $project->tasks->paginate(5, null, null, 'tasks');
@@ -134,7 +133,7 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function edit(Project $project)
+    public function displayEditPage(Project $project)
     {
         $nama = Auth::user()->nama;
         return view('projects.edit', [

@@ -15,7 +15,7 @@ class TaskController extends Controller
      * @param \App\Models\Project $project
      * @return \Illuminate\Http\Response
      */
-    public function create(Project $project)
+    public function displayCreatePage(Project $project)
     {
         $nama = Auth::user()->nama;
         return view('tasks.create', ['project' => $project, 'nama' => $nama]);
@@ -53,7 +53,7 @@ class TaskController extends Controller
      * @param \App\Models\Project $project
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project, Task $task)
+    public function displayDetailPage(Project $project, Task $task)
     {
         $nama = Auth::user()->nama;
         return view('tasks.show', ['task' => $task, 'project' => $project, 'nama' => $nama]);
@@ -66,7 +66,7 @@ class TaskController extends Controller
      * @param \App\Models\Project $project
      * @return \Illuminate\Http\Response
      */
-    public function edit(Project $project, Task $task)
+    public function displayEditPage(Project $project, Task $task)
     {
         $nama = Auth::user()->nama;
         return view('tasks.edit', ['task' => $task, 'project' => $project, 'nama' => $nama]);

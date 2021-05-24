@@ -11,7 +11,7 @@
         <div class="form-group">
             <label for="kode">Kode proyek</label>
             <input maxlength="8" class="form-control mb-2" id="kode" placeholder="1234abcd" name="kode" required autofocus>
-            <input type="submit" value="Simpan" class="btn btn-block btn-primary">
+            <input type="submit" value="Cari" class="btn btn-block btn-primary">
         </div>
     </form>
     <p>Proyek dengan kode {{ $project->id }}</p>

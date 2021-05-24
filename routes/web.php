@@ -25,9 +25,9 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => ['guest']], function () {
-    Route::get('/login', [UserController::class, 'login'])->name('login');
+    Route::get('/login', [UserController::class, 'displayLoginPage'])->name('login');
     Route::post('/login', [UserController::class, 'authenticate']);
-    Route::get('/register', [UserController::class, 'register']);
+    Route::get('/register', [UserController::class, 'displayRegisterPage']);
     Route::post('/register', [UserController::class, 'store']);
 });
 
@@ -35,24 +35,24 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/logout', [UserController::class, 'logout']);
 
-    Route::get('/projects', [ProjectController::class, 'index']);
-    Route::get('/projects/create', [ProjectController::class, 'create']);
+    Route::get('/projects', [ProjectController::class, 'displayDashboard']);
+    Route::get('/projects/create', [ProjectController::class, 'displayCreatePage']);
     Route::post('/projects', [ProjectController::class, 'store']);
-    Route::get('/projects/join', [ProjectController::class, 'join']);
-    Route::get('/projects/join/{project}', [ProjectController::class, 'showJoin']);
+    Route::get('/projects/join', [ProjectController::class, 'displayJoinPage']);
+    Route::get('/projects/join/{project}', [ProjectController::class, 'displayJoinDetailPage']);
     Route::post('/projects/join', [ProjectController::class, 'storeShowJoin']);
     Route::post('/projects/join/store', [ProjectController::class, 'storeJoin']);
 
     Route::group(['middleware' => ['ownedproject']], function () {
-        Route::get('/projects/{project}', [ProjectController::class, 'show']);
-        Route::get('/projects/edit/{project}', [ProjectController::class, 'edit']);
+        Route::get('/projects/{project}', [ProjectController::class, 'displayDetailPage']);
+        Route::get('/projects/edit/{project}', [ProjectController::class, 'displayEditPage']);
         Route::put('/projects/{project}', [ProjectController::class, 'update']);
         Route::delete('/projects/{project}', [ProjectController::class, 'destroy']);
 
-        Route::get('projects/{project}/tasks/create', [TaskController::class, 'create']);
+        Route::get('projects/{project}/tasks/create', [TaskController::class, 'displayCreatePage']);
         Route::post('projects/{project}/tasks', [TaskController::class, 'store']);
-        Route::get('projects/{project}/tasks/{task}', [TaskController::class, 'show']);
-        Route::get('projects/{project}/tasks/edit/{task}', [TaskController::class, 'edit']);
+        Route::get('projects/{project}/tasks/{task}', [TaskController::class, 'displayDetailPage']);
+        Route::get('projects/{project}/tasks/edit/{task}', [TaskController::class, 'displayEditPage']);
         Route::put('projects/{project}/task/{task}', [TaskController::class, 'update']);
         Route::delete('projects/{project}/task/{task}', [TaskController::class, 'destroy']);
     });

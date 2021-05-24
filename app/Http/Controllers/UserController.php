@@ -12,14 +12,11 @@ class UserController extends Controller
     /**
      * @return \Illuminate\Http\Response
      */
-    public function login()
+    public function displayLoginPage()
     {
         return view('login');
     }
-    /**
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function authenticate(Request $request)
     {
         $credentials = $request->only('username', 'password');
@@ -34,7 +31,7 @@ class UserController extends Controller
     /**
      * @return \Illuminate\Http\Response
      */
-    public function register()
+    public function displayRegisterPage()
     {
         return view('register');
     }
